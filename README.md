@@ -134,4 +134,10 @@ This setup runs on the principle that **no secret is ever committed or hardcoded
 
 ---
 
+## License
+
+Released under the [Apache License 2.0](LICENSE).
+
+---
+
 *Documents a real, running setup as of June 2026. Adapt the models, channels, and jobs to your own.*
