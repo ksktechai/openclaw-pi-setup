@@ -1,0 +1,29 @@
+# --- Secrets: never commit these ---
+.env
+*.env
+!*.env.example
+openclaw.json
+!openclaw.json.example
+
+# OpenClaw local state (per-machine, may contain tokens/session data)
+.openclaw/
+*.bak
+
+# SSH keys (in case anything is ever copied into the repo by mistake)
+id_ed25519
+id_ed25519.pub
+*.pem
+
+# Logs
+*.log
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.idea/
+.vscode/
+
+# Node (if any tooling lands here)
+node_modules/
