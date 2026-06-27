@@ -65,13 +65,62 @@ npx openclaw tui             # interactive terminal UI — try a prompt
 
 ## 2.3 Pair Telegram
 
-Telegram is the chat front-end. First create a bot:
+Telegram is the chat front-end. Three steps: create the bot with BotFather, store its token, then
+pair it with OpenClaw.
 
-1. Message [@BotFather](https://t.me/BotFather) and send `/newbot`.
-2. Follow the prompts; save the **bot token** it gives you.
-3. Put the token in `~/.openclaw/.env` as `TELEGRAM_BOT_TOKEN=...` (never inline in `openclaw.json`).
+### 2.3.1 Create the bot with BotFather
 
-Enable the Telegram channel in `~/.openclaw/openclaw.json` (full block in
+[@BotFather](https://t.me/BotFather) is Telegram's official bot for making bots. Open a chat with it
+and send `/start` to see the command list, then `/newbot` to begin:
+
+```text
+You:        /newbot
+BotFather:  Alright, a new bot. How are we going to call it?
+            Please choose a name for your bot.
+You:        HermesBot                    ← display name (anything, shown in chats)
+
+BotFather:  Good. Now let's choose a username for your bot. It must end in `bot`.
+            Like this, for example: TetrisBot or tetris_bot.
+You:        HermesTechBot                ← username (globally unique, must end in "bot")
+
+BotFather:  Done! Congratulations on your new bot. You will find it at t.me/HermesTechBot.
+            Use this token to access the HTTP API:
+            123456789:ABCdefGhIJKlmNoPQRstuVwxyZ      ← your bot token (keep secret)
+```
+
+![Creating the bot in a chat with BotFather — the /newbot flow, the username retries, and the final token (redacted)](../assets/botfather-newbot.png)
+
+*The real exchange. Note the several "username already taken" rejections before `HermesTechBot`
+stuck — and that the token (bottom) is redacted here; never share or commit yours.*
+
+Two things trip people up here:
+
+- **The display name and the username are different.** The first prompt is the friendly name shown in
+  chats (`HermesBot`); the second is the global handle and **must end in `bot`** (`HermesTechBot`,
+  or `hermes_tech_bot`).
+- **Good usernames are taken.** Expect a few rounds of *"Sorry, this username is already taken"* (and
+  *"this username is invalid"* if it doesn't end in `bot` or uses bad characters) before one sticks —
+  it took several tries to land on `HermesTechBot` here. The username can't be changed later without
+  asking BotFather's support, so pick one you'll keep.
+
+When it succeeds, BotFather hands you the **HTTP API token** (`123456789:ABC...`). This is the bot's
+password — anyone with it can control the bot — so treat it like a secret. If it ever leaks, send
+BotFather `/revoke` to invalidate it and issue a new one.
+
+> **Optional polish** (also via BotFather): `/setdescription` and `/setabouttext` for the bot's
+> profile, `/setuserpic` for an avatar, and `/setcommands` to register a command menu. `/mybots`
+> reopens any bot to edit later.
+
+### 2.3.2 Store the token and enable the channel
+
+Put the token in `~/.openclaw/.env` (never inline in `openclaw.json`):
+
+```bash
+# ~/.openclaw/.env
+TELEGRAM_BOT_TOKEN=123456789:ABCdefGhIJKlmNoPQRstuVwxyZ
+```
+
+Then enable the Telegram channel in `~/.openclaw/openclaw.json` (full block in
 [examples/openclaw.json.example](../examples/openclaw.json.example)):
 
 ```json
@@ -89,8 +138,10 @@ Enable the Telegram channel in `~/.openclaw/openclaw.json` (full block in
 - `groups."*".requireMention: true` — in group chats the bot only answers when @mentioned, so it
   doesn't barge into every conversation.
 
-Restart the gateway, then message your bot. It will surface a one-time **pairing code**; approve it
-from the Pi:
+### 2.3.3 Pair the bot with OpenClaw
+
+Restart the gateway, then message your bot in Telegram. It will surface a one-time **pairing code**;
+approve it from the Pi:
 
 ```bash
 npx openclaw channels list

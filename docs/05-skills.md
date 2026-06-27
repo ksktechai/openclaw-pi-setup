@@ -46,6 +46,19 @@ They sound similar but solve different problems — they're complementary, not d
 
 A natural pairing: `youtube-full` finds candidates, `youtube-watcher` summarizes the one you pick.
 
+#### In practice
+
+**`youtube-full` — pulling every YouTube channel out of a Reddit thread.** Ask the bot for the links
+discussed in a thread and it fetches the page, extracts the channels, and returns them as a clean
+numbered list:
+
+![youtube-full extracting all YouTube channel URLs discussed in a Reddit thread, returned as a numbered list](../assets/skill-youtube-full.png)
+
+**`youtube-watcher` — transcript → 2–3 bullet summary.** Hand it a single video URL and it pulls the
+transcript and condenses it to the points you asked for:
+
+![youtube-watcher fetching a video transcript and summarizing it into three bullet points](../assets/skill-youtube-watcher.png)
+
 ### Transcript API key
 
 Both rely on a transcript service. Sign up at <https://transcriptapi.com/signup>, then put the key in
@@ -67,6 +80,13 @@ Restart the gateway so it picks up the new variable.
   Also keyless.
 
 These two are the easy wins — install, enable, restart, done.
+
+#### In practice
+
+A quick `weather` query — current conditions plus a short outlook — followed by an evening news brief
+(the agent reaching the web itself, as in the [architecture](../README.md#architecture)):
+
+![weather skill returning an Auckland next-6-hours forecast, and a web-sourced evening NZ news brief](../assets/skill-weather-news.png)
 
 ---
 

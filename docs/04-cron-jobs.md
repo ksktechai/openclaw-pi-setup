@@ -18,6 +18,17 @@ The digest idea came from [awesome-openclaw-usecases](https://github.com/hesamsh
 `30 9 * * *` = every day at 09:30; `0 7 * * 6` = 07:00 on Saturday — both **in the job's own
 timezone**, which you must set explicitly (see [§4.4](#44-gotcha-set-the-timezone-explicitly)).
 
+Each job delivers into its own Telegram **topic** (a thread within the group — `github-trends` and
+`company-earnings` in the sidebar), so the digests stay organised and don't crowd the main chat.
+This is what they actually look like when they land:
+
+| Daily GitHub Trends digest → `#github-trends` | Weekly AI & Tech Earnings → `#company-earnings` |
+|:---:|:---:|
+| ![GitHub Trending Digest posted by HermesBot into the github-trends topic, listing five trending repos with why-it-matters notes and links](../assets/cron-github-trends.png) | ![Weekly AI & Tech Earnings Briefing posted by HermesBot into the company-earnings topic, covering upcoming earnings, economic data, and must-watch dates](../assets/cron-earnings-digest.png) |
+
+Both were posted by the bot on a schedule with **no human in the loop** — the agent ran the prompt,
+gathered the data over the web, formatted the briefing, and announced it to the topic.
+
 ---
 
 ## 4.2 Anatomy of a cron job
